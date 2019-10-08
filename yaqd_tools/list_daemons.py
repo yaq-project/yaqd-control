@@ -14,7 +14,7 @@ def main():
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
             s.connect((host, i))
-            s.sendall(b'{"command": "id"}')
+            s.sendall(b'{"jsonrpc":"2.0", "method": "id", "id":"find"}')
             ident = json.loads(s.recv(1024))
         except Exception as e:
             continue

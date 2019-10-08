@@ -1,6 +1,7 @@
 import argparse
 import pathlib
 import subprocess
+import sys
 
 import appdirs
 import toml
@@ -13,6 +14,9 @@ def main():
     args = parser.parse_args()
     config = pathlib.Path(args.config_dir)
 
+    tomls = config.rglob("*.toml")
+    if len(tomls) == 0:
+        print(f"No config files found in {config}")
     for fp in config.rglob("*.toml"):
         if fp.stem.endswith("state"):
             continue
@@ -20,16 +24,17 @@ def main():
             try:
                 cd = toml.load(f)
             except toml.TomlDecodeError as e:
-                print(e)
-                print(fp)
+                print(e, file=sys.stderr)
+                print(fp, file=sys.stderr)
                 continue
             if not cd.get("enable", True):
                 continue
             if "entry" not in cd:
                 continue
 
-            proc = subprocess.Popen([cd["entry"], "--config", str(fp)], stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
-            print(f"PID: {proc.pid}: {cd['entry']} --config {fp}")
+            cmd = [cd["entry"], "--config", str(fp)]
+            proc = subprocess.Popen(cmd, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
+            print(f"PID: {proc.pid} - {" ".join(cmd)}")
     
 if __name__ == "__main__":
     main()
