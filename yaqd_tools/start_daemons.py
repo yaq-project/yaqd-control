@@ -15,7 +15,7 @@ def main():
     config = pathlib.Path(args.config_dir)
 
     tomls = config.rglob("*.toml")
-    if len(tomls) == 0:
+    if not tomls:
         print(f"No config files found in {config}")
     for fp in config.rglob("*.toml"):
         if fp.stem.endswith("state"):
@@ -33,8 +33,9 @@ def main():
                 continue
 
             cmd = [cd["entry"], "--config", str(fp)]
+            print(fp)
             proc = subprocess.Popen(cmd, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
-            print(f"PID: {proc.pid} - {" ".join(cmd)}")
+            print(f"PID: {proc.pid} - {' '.join(cmd)}")
     
 if __name__ == "__main__":
     main()
