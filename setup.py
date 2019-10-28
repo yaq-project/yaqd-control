@@ -11,13 +11,13 @@ def read(fname):
     return open(os.path.join(here, fname)).read()
 
 
-with open(os.path.join(here, "yaqd_tools", "VERSION")) as version_file:
+with open(os.path.join(here, "yaqd_control", "VERSION")) as version_file:
     version = version_file.read().strip()
 
-extra_files = {"yaqd_tools": ["VERSION"]}
+extra_files = {"yaqd_control": ["VERSION"]}
 
 setup(
-    name="yaqd-tools",
+    name="yaqd-control",
     packages=find_packages(exclude=("tests", "tests.*")),
     package_data=extra_files,
     python_requires=">=3.7",
@@ -35,8 +35,7 @@ setup(
     license="LGPL v3",
     url="http://gitlab.com/yaq/yaqd-tools",
     entry_points={"console_scripts": [
-        "yaqd-list-daemons=yaqd_tools.list_daemons:main",
-        "yaqd-start-daemons=yaqd_tools.start_daemons:main",
+        "yaqd=yaqd_control.__main__:main",
         ]},
     keywords="spectroscopy science multidimensional hardware",
     classifiers=[
