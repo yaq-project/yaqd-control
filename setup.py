@@ -34,9 +34,7 @@ setup(
     author="yaq Developers",
     license="LGPL v3",
     url="http://gitlab.com/yaq/yaqd-tools",
-    entry_points={"console_scripts": [
-        "yaqd=yaqd_control.__main__:main",
-        ]},
+    entry_points={"console_scripts": ["yaqd=yaqd_control.__main__:main"]},
     keywords="spectroscopy science multidimensional hardware",
     classifiers=[
         "Development Status :: 1 - Planning",
