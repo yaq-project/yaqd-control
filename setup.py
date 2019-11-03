@@ -23,7 +23,7 @@ setup(
     python_requires=">=3.7",
     setup_requires=["pytest-runner"],
     tests_require=["pytest", "pytest-cov"],
-    install_requires=["appdirs", "toml", "click", "prettytable"],
+    install_requires=["appdirs", "toml", "click", "prettytable", "colorama"],
     extras_require={
         "docs": ["sphinx", "sphinx-gallery>=0.3.0", "sphinx-rtd-theme"],
         "dev": ["black", "pre-commit", "pydocstyle"],
