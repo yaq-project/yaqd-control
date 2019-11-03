@@ -5,6 +5,7 @@ import click
 from ._cache import clear_cache
 from ._scan import scan
 from ._start import start
+from ._status import status
 from ._list import list as list_
 
 
@@ -30,6 +31,11 @@ def _scan(host, start, stop):
 @click.argument("directory", required=False, type=click.Path())
 def _start(directory):
     start(directory)
+
+
+@main.command(name="status")
+def _status():
+    status()
 
 
 @main.command(name="list")
