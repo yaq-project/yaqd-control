@@ -14,7 +14,7 @@ def read(fname):
 with open(os.path.join(here, "yaqd_control", "VERSION")) as version_file:
     version = version_file.read().strip()
 
-extra_files = {"yaqd_control": ["VERSION"]}
+extra_files = {"yaqd_control": ["VERSION", "bin/nssm.exe"]}
 
 setup(
     name="yaqd-control",

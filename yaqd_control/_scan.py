@@ -36,11 +36,7 @@ def scan(host="127.0.0.1", start=36000, stop=39999):
                 print(f"...known daemon {kind}:{name} on port {i} not responding")
             continue
         # format result
-        kwargs = {
-            k: v
-            for k, v in ident["result"].items()
-            if k in DaemonData.get_field_names()
-        }
+        kwargs = {k: v for k, v in ident["result"].items() if k in DaemonData.get_field_names()}
         kwargs["host"] = host
         kwargs["port"] = i
         kwargs["config_filepath"] = config_filepath

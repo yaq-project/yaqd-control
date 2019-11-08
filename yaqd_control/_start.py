@@ -31,7 +31,5 @@ def start(config_dir=None):
 
             cmd = [cd["entry"], "--config", str(fp)]
             print(fp)
-            proc = subprocess.Popen(
-                cmd, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL
-            )
+            proc = subprocess.Popen(cmd, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
             print(f"PID: {proc.pid} - {' '.join(cmd)}")
