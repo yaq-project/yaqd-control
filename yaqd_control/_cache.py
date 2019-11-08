@@ -53,3 +53,19 @@ def write_to_daemon_cache(daemon_data):
     # write
     with open(daemeon_cache_path, "wt") as f:
         toml.dump(dic, f)
+
+
+def add_config(filepath):
+    filepath = pathlib.Path(filepath).absolute()
+    with open(filepath, "r") as f:
+        dic = toml.load(f)
+    kind = dic.get("entry", filepath.parent.name)
+    if kind.startswith("yaqd-"):
+        kind = kind[5:]
+    for k, v in dic.items():
+        if k in ("entry", "enable", "shared-settings"):
+            continue
+        dd = DaemonData(
+            kind=kind, host="127.0.0.1", port=v["port"], name=k, config_filepath=str(filepath)
+        )
+        write_to_daemon_cache(dd)

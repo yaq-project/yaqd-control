@@ -25,19 +25,10 @@ def status():
             s.sendall(b'{"jsonrpc":"2.0", "method": "busy", "id":"status"}')
             ident = json.loads(s.recv(1024))
             out.add_row(
-                [
-                    daemon.host,
-                    daemon.port,
-                    daemon.kind,
-                    daemon.name,
-                    "online",
-                    ident["result"],
-                ]
+                [daemon.host, daemon.port, daemon.kind, daemon.name, "online", ident["result"]]
             )
         except Exception as e:
-            out.add_row(
-                [daemon.host, daemon.port, daemon.kind, daemon.name, "offline", "?"]
-            )
+            out.add_row([daemon.host, daemon.port, daemon.kind, daemon.name, "offline", "?"])
     out = out.get_string()
     out = colorify(out, "online", Fore.GREEN)
     out = colorify(out, "offline", Fore.RED)
