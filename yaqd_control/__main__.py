@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 
+import os
 import pathlib
+import subprocess
 
+import appdirs
 import click
 from ._cache import add_config, clear_cache, read_daemon_cache
 from ._enablement import enable, disable
@@ -33,6 +36,29 @@ def _scan(host, start, stop):
 @click.argument("directory", required=False, type=click.Path())
 def _start(directory):
     start(directory)
+
+
+@main.command(name="edit-config")
+@click.argument("kind", nargs=-1)
+def edit_config(kind):
+    for k in kind:
+        try:
+            dd = next(d for d in read_daemon_cache() if d.kind == k)
+            config_filepath = pathlib.Path(dd.config_filepath)
+        except:
+            config_filepath = (
+                pathlib.Path(appdirs.user_config_dir("yaqd", "yaq")) / k / "config.toml"
+            )
+        config_filepath.parent.mkdir(parents=True, exist_ok=True)
+        while True:
+            subprocess.run([os.environ.get("EDITOR", "vi"), config_filepath])
+            try:
+                add_config(config_filepath)
+                break
+            except Exception:
+
+                if not click.confirm("Error updating cache. Would you like to re-edit the config?", default=True):
+                    break
 
 
 @main.command(name="status")
