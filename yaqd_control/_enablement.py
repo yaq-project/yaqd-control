@@ -1,4 +1,4 @@
-__all__ = ["enable", "disable"]
+__all__ = ["enable", "disable", "start", "stop", "restart", "reload"]
 
 import getpass
 import pathlib
@@ -18,6 +18,7 @@ Description=yaqd-{kind}
 Type=simple
 User={user}
 ExecStart={executable} --config={config_path}
+ExecReload=/bin/kill -HUP $MAINPID
 
 [Install]
 WantedBy=multi-user.target
@@ -42,7 +43,9 @@ def enable(kind):
         daemon_data = next(d for d in known_daemons if d.kind == kind)
         config_path = daemon_data.config_filepath
     except:
-        config_path = pathlib.Path(appdirs.user_config_dir("yaqd", "yaq")) / kind / "config.toml"
+        config_path = (
+            pathlib.Path(appdirs.user_config_dir("yaqd", "yaq")) / kind / "config.toml"
+        )
         add_config(config_path)
     if sys.platform.startswith("win32"):
         executable = (
@@ -50,7 +53,16 @@ def enable(kind):
             .stdout.decode()
             .strip()
         )
-        subprocess.run([nssm_exe, "install", f"yaqd-{kind}", executable, f"--config={config_path}"], check=True)
+        subprocess.run(
+            [
+                nssm_exe,
+                "install",
+                f"yaqd-{kind}",
+                executable,
+                f"--config={config_path}",
+            ],
+            check=True,
+        )
     elif sys.platform.startswith("linux"):
         executable = (
             subprocess.run(["which", f"yaqd-{kind}"], capture_output=True, check=True)
@@ -64,8 +76,14 @@ def enable(kind):
                 ).encode()
             )
             tf.flush()
-            subprocess.run(["sudo", "cp", tf.name, f"/etc/systemd/system/yaqd-{kind}.service"], check=True)
-            subprocess.run(["sudo", "chmod", "+r", f"/etc/systemd/system/yaqd-{kind}.service"], check=True)
+            subprocess.run(
+                ["sudo", "cp", tf.name, f"/etc/systemd/system/yaqd-{kind}.service"],
+                check=True,
+            )
+            subprocess.run(
+                ["sudo", "chmod", "+r", f"/etc/systemd/system/yaqd-{kind}.service"],
+                check=True,
+            )
 
         subprocess.run(["systemctl", "enable", f"yaqd-{kind}"])
 
@@ -78,5 +96,41 @@ def disable(kind):
         subprocess.run([nssm_exe, "remove", f"yaqd-{kind}"])
     elif sys.platform.startswith("linux"):
         subprocess.run(["systemctl", "disable", f"yaqd-{kind}"])
+    else:
+        raise NotImplementedError
+
+
+def start(kind):
+    if sys.platform.startswith("win32"):
+        subprocess.run([nssm_exe, "start", f"yaqd-{kind}"])
+    elif sys.platform.startswith("linux"):
+        subprocess.run(["systemctl", "start", f"yaqd-{kind}"])
+    else:
+        raise NotImplementedError
+
+
+def stop(kind):
+    if sys.platform.startswith("win32"):
+        subprocess.run([nssm_exe, "stop", f"yaqd-{kind}"])
+    elif sys.platform.startswith("linux"):
+        subprocess.run(["systemctl", "stop", f"yaqd-{kind}"])
+    else:
+        raise NotImplementedError
+
+
+def restart(kind):
+    if sys.platform.startswith("win32"):
+        subprocess.run([nssm_exe, "restart", f"yaqd-{kind}"])
+    elif sys.platform.startswith("linux"):
+        subprocess.run(["systemctl", "restart", f"yaqd-{kind}"])
+    else:
+        raise NotImplementedError
+
+
+def reload(kind):
+    if sys.platform.startswith("win32"):
+        subprocess.run([nssm_exe, "restart", f"yaqd-{kind}"])
+    elif sys.platform.startswith("linux"):
+        subprocess.run(["systemctl", "reload", f"yaqd-{kind}"])
     else:
         raise NotImplementedError
