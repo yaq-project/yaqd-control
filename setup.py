@@ -32,8 +32,14 @@ setup(
     description="Core structures for yaq component daemons",
     # long_description=read("README.rst"),
     author="yaq Developers",
+    author_email="git@ksunden.space",
     license="LGPL v3",
-    url="http://gitlab.com/yaq/yaqd-tools",
+    url="https://yaq.fyi",
+    project_urls={
+        "Source": "https://gitlab.com/yaq/yaqd-control",
+        "Documentation": "https://yaq.fyi",
+        "Issue Tracker": "https://gitlab.com/yaq/yaqd-control/issues",
+    },
     entry_points={"console_scripts": ["yaqd=yaqd_control.__main__:main"]},
     keywords="spectroscopy science multidimensional hardware",
     classifiers=[
