@@ -3,6 +3,7 @@
 import os
 import pathlib
 import subprocess
+import sys
 
 import appdirs
 import click
@@ -56,7 +57,10 @@ def edit_config(kind):
                 break
             except Exception:
 
-                if not click.confirm("Error updating cache. Would you like to re-edit the config?", default=True):
+                if not click.confirm(
+                    "Error updating cache. Would you like to re-edit the config?",
+                    default=True,
+                ):
                     break
 
 
@@ -79,28 +83,38 @@ def _parse_kinds(daemon, all_):
 
 
 all_option = click.option(
-    "-a", "--all", "all_", is_flag=True, default=False, help="Apply to all known daemons."
+    "-a",
+    "--all",
+    "all_",
+    is_flag=True,
+    default=False,
+    help="Apply to all known daemons.",
 )
 
 
 @main.command(name="enable")
 @click.argument("daemon", nargs=-1)
 @all_option
-def _enable(daemon, all_=False):
+@click.option(
+    "--password",
+    "-p",
+    prompt=sys.platform.startswith("win32"),
+    hide_input=True,
+    help="Password for user account, only used on Windows",
+)
+def _enable(daemon, all_=False, password=None):
     daemon = _parse_kinds(daemon, all_)
     for d in daemon:
         if d.endswith(".toml"):
             d = pathlib.Path(d).absolute()
             add_config(d)
             known_daemons = read_daemon_cache()
-            print(d)
-            print([pathlib.Path(dd.config_filepath).absolute() for dd in known_daemons])
             d = next(
                 dd.kind
                 for dd in known_daemons
                 if pathlib.Path(dd.config_filepath).absolute() == d
             )
-        enable(d)
+        enable(d, password)
 
 
 @main.command(name="disable")
