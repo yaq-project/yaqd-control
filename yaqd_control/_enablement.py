@@ -36,7 +36,7 @@ if sys.platform.startswith("win32"):
     nssm_exe = str(nssm_exe)
 
 
-def enable(kind):
+def enable(kind, password=None):
     user = getpass.getuser()
     known_daemons = read_daemon_cache()
     try:
@@ -48,6 +48,8 @@ def enable(kind):
         )
         add_config(config_path)
     if sys.platform.startswith("win32"):
+        if password is None:
+            raise ValueError("Windows services require a password")
         executable = (
             subprocess.run(["where", f"yaqd-{kind}"], capture_output=True, check=True)
             .stdout.decode()
@@ -63,6 +65,10 @@ def enable(kind):
             ],
             check=True,
         )
+        subprocess.run(
+            [nssm_exe, "set", f"yaqd-{kind}", "ObjectName", f".\\{user}", password], check=True
+        )
+
     elif sys.platform.startswith("linux"):
         executable = (
             subprocess.run(["which", f"yaqd-{kind}"], capture_output=True, check=True)
