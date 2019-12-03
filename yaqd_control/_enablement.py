@@ -6,7 +6,7 @@ import subprocess
 import sys
 import tempfile
 
-import appdirs
+import appdirs  # type: ignore
 
 from ._cache import add_config, read_daemon_cache
 

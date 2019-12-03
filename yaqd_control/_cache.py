@@ -2,7 +2,7 @@ __all__ = ["read_daemon_cache", "write_daemon_cache"]
 
 
 import pathlib
-import appdirs
+import appdirs  # type: ignore
 import toml
 from ._daemon_data import DaemonData
 
@@ -66,6 +66,10 @@ def add_config(filepath):
         if k in ("entry", "enable", "shared-settings"):
             continue
         dd = DaemonData(
-            kind=kind, host="127.0.0.1", port=v["port"], name=k, config_filepath=str(filepath)
+            kind=kind,
+            host="127.0.0.1",
+            port=v["port"],
+            name=k,
+            config_filepath=str(filepath),
         )
         write_to_daemon_cache(dd)

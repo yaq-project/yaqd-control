@@ -1,8 +1,8 @@
-__all__ = [list]
+__all__ = ["list"]
 
 
 from ._cache import read_daemon_cache
-import prettytable
+import prettytable  # type: ignore
 
 
 def list():
