@@ -5,7 +5,7 @@ import pathlib
 import subprocess
 import sys
 
-import appdirs
+import appdirs  # type: ignore
 import click
 from ._cache import add_config, clear_cache, read_daemon_cache
 from ._enablement import enable, disable, start, stop, reload, restart
@@ -30,12 +30,6 @@ def _clear_cache():
 @click.option("--stop", default=39999, help="Scan stopping point.")
 def _scan(host, start, stop):
     scan(host=host, start=start, stop=stop)
-
-
-@main.command(name="start")
-@click.argument("directory", required=False, type=click.Path())
-def _start(directory):
-    start(directory)
 
 
 @main.command(name="edit-config")
