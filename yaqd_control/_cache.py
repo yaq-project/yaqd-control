@@ -59,11 +59,11 @@ def add_config(filepath):
     filepath = pathlib.Path(filepath).absolute()
     with open(filepath, "r") as f:
         dic = toml.load(f)
-    kind = dic.get("entry", filepath.parent.name)
+    kind = filepath.parent.name
     if kind.startswith("yaqd-"):
         kind = kind[5:]
     for k, v in dic.items():
-        if k in ("entry", "enable", "shared-settings"):
+        if k in ("enable", "shared-settings"):
             continue
         dd = DaemonData(
             kind=kind,
