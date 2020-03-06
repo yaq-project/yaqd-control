@@ -39,8 +39,9 @@ mypy:
 run:
   stage: build
   script:
-    - python setup.py sdist bdist_wheel
-    - pip install -U dist/*.whl
+    - python setup.py bdist_wheel
+    - python setup.py sdist bdist_wheel --plat-name win32
+    - pip install -U dist/*any.whl
     - yaqd --version
   artifacts:
     paths:
