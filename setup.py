@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
 
 import os
+import sys
 from setuptools import setup, find_packages
 
 
@@ -14,7 +15,10 @@ def read(fname):
 with open(os.path.join(here, "yaqd_control", "VERSION")) as version_file:
     version = version_file.read().strip()
 
-extra_files = {"yaqd_control": ["VERSION", "bin/nssm.exe"]}
+extra_files = {"yaqd_control": ["VERSION"]}
+
+if "win32" in sys.argv:
+    extra_files = {"yaqd_control": ["VERSION", "bin/nssm.exe"]}
 
 setup(
     name="yaqd-control",
