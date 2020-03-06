@@ -7,6 +7,8 @@ import sys
 
 import appdirs  # type: ignore
 import click
+
+from .__version__ import __version__
 from ._cache import add_config, clear_cache, read_daemon_cache
 from ._enablement import enable, disable, start, stop, reload, restart
 from ._scan import scan
@@ -15,6 +17,7 @@ from ._list import list as list_
 
 
 @click.group()
+@click.version_option(__version__)
 def main():
     pass
 

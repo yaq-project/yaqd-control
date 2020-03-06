@@ -41,6 +41,7 @@ run:
   script:
     - python setup.py sdist bdist_wheel
     - pip install -U dist/*.whl
+    - yaqd --version
   artifacts:
     paths:
       - dist/*
