@@ -1,13 +1,14 @@
 __all__ = ["status"]
 
 
-import json
 import socket
 import prettytable  # type: ignore
 import colorama  # type: ignore
 from colorama import Fore
-from ._cache import read_daemon_cache
 
+import msgpack
+
+from ._cache import read_daemon_cache
 
 def colorify(string, text, color):
     colorama.init()  # for windows
@@ -22,8 +23,8 @@ def status():
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
             s.connect((daemon.host, daemon.port))
-            s.sendall(b'{"jsonrpc":"2.0", "method": "busy", "id":"status"}')
-            ident = json.loads(s.recv(1024))
+            s.sendall(msgpack.packb({"ver":"1.0", "method": "busy", "id":"status"}))
+            ident = msgpack.unpackb(s.recv(1024))
             out.add_row(
                 [
                     daemon.host,

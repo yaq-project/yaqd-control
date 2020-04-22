@@ -25,7 +25,7 @@ setup(
     packages=find_packages(exclude=("tests", "tests.*")),
     package_data=extra_files,
     python_requires=">=3.7",
-    install_requires=["appdirs", "toml", "click", "prettytable", "colorama"],
+    install_requires=["appdirs", "toml", "click", "prettytable", "colorama", "msgpack"],
     extras_require={
         "docs": ["sphinx", "sphinx-gallery>=0.3.0", "sphinx-rtd-theme"],
         "dev": ["black", "pre-commit", "pydocstyle"],
