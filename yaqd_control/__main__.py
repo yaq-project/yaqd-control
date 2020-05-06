@@ -48,7 +48,11 @@ def edit_config(kind):
             )
         config_filepath.parent.mkdir(parents=True, exist_ok=True)
         while True:
-            subprocess.run([os.environ.get("EDITOR", "vi"), config_filepath])
+            if sys.platform.startswith("win32"):
+                config_filepath = str(config_filepath)
+                subprocess.run([os.environ.get("EDITOR", "notepad.exe"), config_filepath])
+            else:
+                subprocess.run([os.environ.get("EDITOR", "vi"), config_filepath])
             try:
                 add_config(config_filepath)
                 break
