@@ -21,7 +21,7 @@ mypy:
     - mypy yaqd_control
 
 pages:
-  stage: build
+  stage: deploy
   script:
     - echo "nothing to do"
   artifacts:
@@ -29,7 +29,6 @@ pages:
     - docs
   only:
   - master
-
 twine:
   stage: deploy
   script:

@@ -9,11 +9,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ### Added
 - support for edit-config with notepad on Windows
+- new documentation at https://control.yaq.fyi
 
 ### Changed
 - pin msgpack version above 1.0
 - from now on, yaqd-control will used date based versioning
 - Includes nssm when built on Windows (not dependent on passing arguments)
+- refactored ci
 
 ## [0.2.0]
 
