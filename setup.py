@@ -17,7 +17,7 @@ with open(os.path.join(here, "yaqd_control", "VERSION")) as version_file:
 
 extra_files = {"yaqd_control": ["VERSION"]}
 
-if "win32" in sys.argv:
+if sys.platform == "win32" or "win32" in sys.argv:
     extra_files = {"yaqd_control": ["VERSION", "bin/nssm.exe"]}
 
 setup(
@@ -25,7 +25,14 @@ setup(
     packages=find_packages(exclude=("tests", "tests.*")),
     package_data=extra_files,
     python_requires=">=3.7",
-    install_requires=["appdirs", "toml", "click", "prettytable", "colorama", "msgpack>=1.0.0"],
+    install_requires=[
+        "appdirs",
+        "toml",
+        "click",
+        "prettytable",
+        "colorama",
+        "msgpack>=1.0.0",
+    ],
     extras_require={
         "docs": ["sphinx", "sphinx-gallery>=0.3.0", "sphinx-rtd-theme"],
         "dev": ["black", "pre-commit", "pydocstyle"],
