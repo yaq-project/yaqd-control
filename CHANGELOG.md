@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 ### Changed
 - pin msgpack version above 1.0
 - from now on, yaqd-control will used date based versioning
+- Includes nssm when built on Windows (not dependent on passing arguments)
 
 ## [0.2.0]
 
