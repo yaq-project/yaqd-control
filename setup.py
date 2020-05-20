@@ -47,7 +47,7 @@ setup(
     url="https://yaq.fyi",
     project_urls={
         "Source": "https://gitlab.com/yaq/yaqd-control",
-        "Documentation": "https://yaq.fyi",
+        "Documentation": "https://control.yaq.fyi",
         "Issue Tracker": "https://gitlab.com/yaq/yaqd-control/issues",
     },
     entry_points={"console_scripts": ["yaqd=yaqd_control.__main__:main"]},
