@@ -23,10 +23,11 @@ mypy:
 pages:
   stage: deploy
   script:
-    - echo "nothing to do"
+    - mkdir public
+    - cp docs/* public/
   artifacts:
     paths:
-    - docs
+    - public/
   only:
   - master
 twine:
