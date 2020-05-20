@@ -8,3 +8,4 @@
 [![log](https://img.shields.io/badge/change-log-informational)](https://gitlab.com/yaq/yaqd-control/-/blob/master/CHANGELOG.md)
 
 Command line tools for inspecting and controlling yaq daemons.
+https://control.yaq.fyi/
