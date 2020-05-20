@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [2020.05.0]
+
 ### Added
 - support for edit-config with notepad on Windows
 
@@ -36,7 +38,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 ### Added
 - initial release
 
-[Unreleased]: https://gitlab.com/yaq/yaqd-control/-/compare/v0.2.0...master
+[Unreleased]: https://gitlab.com/yaq/yaqd-control/-/compare/v2020.05.0...master
+[2020.05.0]: https://gitlab.com/yaq/yaqd-control/-/compare/v0.2.0...v2020.05.9
 [0.2.0]: https://gitlab.com/yaq/yaqd-control/-/compare/v0.1.1...v0.2.0
 [0.1.1]: https://gitlab.com/yaq/yaqd-control/-/compare/v0.1.0...v0.1.1
 [0.1.0]: https://gitlab.com/yaq/yaqd-control/-/tags/v0.1.0
