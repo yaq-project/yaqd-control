@@ -1,3 +1,4 @@
+# configure
 image: python:latest
 variables:
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
@@ -6,20 +7,28 @@ cache:
     - .cache/pip
     - venv/
 
+# common to all scripts
 before_script:
-  - python -V  # Print out python version for debugging
+  - python -V
   - pip install -U virtualenv
   - virtualenv venv
   - source venv/bin/activate
-  - pip install -U twine
+  - pip install -U flit
   - pip install -U pytest
   - pip install -U mypy
+  - FLIT_ROOT_INSTALL=1 flit install
 
+# test stage
 mypy:
   stage: test
   script:
     - mypy yaqd_control
+entry:
+  stage: test
+  script:
+    - yaqd --help
 
+# deploy stage
 pages:
   stage: deploy
   script:
@@ -30,15 +39,10 @@ pages:
     - public/
   only:
   - master
-twine:
+flit:
   stage: deploy
   script:
-    - python setup.py bdist_wheel
-    - python setup.py bdist_wheel --plat-name win32
-    - python setup.py sdist
-    - pip install -U dist/*any.whl
-    - yaqd --version
-    - twine upload dist/*
+    - flit publish
   artifacts:
     paths:
       - dist/*
