@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ### Changed
 - migrated to flit build system
+- now use yaqc-python rather than implementing custom rpc calls
 
 ## [2020.05.0]
 
