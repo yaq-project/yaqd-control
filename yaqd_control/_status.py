@@ -6,7 +6,7 @@ import prettytable  # type: ignore
 import colorama  # type: ignore
 from colorama import Fore
 
-import msgpack  # type: ignore
+import yaqc  # type: ignore
 
 from ._cache import read_daemon_cache
 
@@ -21,25 +21,14 @@ def status():
     out.field_names = ["host", "port", "kind", "name", "status", "busy"]
     out.align = "l"
     for daemon in read_daemon_cache():
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
-            s.connect((daemon.host, daemon.port))
-            s.sendall(msgpack.packb({"ver": "1.0", "method": "busy", "id": "status"}))
-            ident = msgpack.unpackb(s.recv(1024))
+            c = yaqc.Client(host=daemon.host, port=daemon.port)
             out.add_row(
-                [
-                    daemon.host,
-                    daemon.port,
-                    daemon.kind,
-                    daemon.name,
-                    "online",
-                    ident["result"],
-                ]
+                [daemon.host, daemon.port, daemon.kind, daemon.name, "online", c.busy(),]
             )
         except Exception as e:
-            out.add_row(
-                [daemon.host, daemon.port, daemon.kind, daemon.name, "offline", "?"]
-            )
+            print(e)
+            out.add_row([daemon.host, daemon.port, daemon.kind, daemon.name, "offline", "?"])
     out = out.get_string()
     out = colorify(out, "online", Fore.GREEN)
     out = colorify(out, "offline", Fore.RED)
