@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [2020.06.0]
+
 ### Changed
 - migrated to flit build system
 - now use yaqc-python rather than implementing custom rpc calls
@@ -44,8 +46,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 ### Added
 - initial release
 
-[Unreleased]: https://gitlab.com/yaq/yaqd-control/-/compare/v2020.05.0...master
-[2020.05.0]: https://gitlab.com/yaq/yaqd-control/-/compare/v0.2.0...v2020.05.9
+[Unreleased]: https://gitlab.com/yaq/yaqd-control/-/compare/v2020.06.0...master
+[2020.06.0]: https://gitlab.com/yaq/yaqd-control/-/compare/v2020.05.0...v2020.06.0
+[2020.05.0]: https://gitlab.com/yaq/yaqd-control/-/compare/v0.2.0...v2020.05.0
 [0.2.0]: https://gitlab.com/yaq/yaqd-control/-/compare/v0.1.1...v0.2.0
 [0.1.1]: https://gitlab.com/yaq/yaqd-control/-/compare/v0.1.0...v0.1.1
 [0.1.0]: https://gitlab.com/yaq/yaqd-control/-/tags/v0.1.0
