@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Changed
+- migrated to flit build system
+
 ## [2020.05.0]
 
 ### Added
