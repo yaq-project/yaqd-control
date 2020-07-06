@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [2020.07.0]
+
 ### Fixed
 - Correct python version supported (>=3.7)
 
@@ -49,7 +51,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 ### Added
 - initial release
 
-[Unreleased]: https://gitlab.com/yaq/yaqd-control/-/compare/v2020.06.0...master
+[Unreleased]: https://gitlab.com/yaq/yaqd-control/-/compare/v2020.07.0...master
+[2020.07.0]: https://gitlab.com/yaq/yaqd-control/-/compare/v2020.06.0...v2020.07.0
 [2020.06.0]: https://gitlab.com/yaq/yaqd-control/-/compare/v2020.05.0...v2020.06.0
 [2020.05.0]: https://gitlab.com/yaq/yaqd-control/-/compare/v0.2.0...v2020.05.0
 [0.2.0]: https://gitlab.com/yaq/yaqd-control/-/compare/v0.1.1...v0.2.0
