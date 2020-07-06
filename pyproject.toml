@@ -7,7 +7,7 @@ module = "yaqd_control"
 author = "yaq developers"
 author-email = "git@ksunden.space"
 home-page = "https://yaq.fyi"
-requires-python = ">3.7"
+requires-python = ">=3.7"
 requires = ["appdirs", "toml", "click", "prettytable", "colorama", "yaqc"]
 description-file="README.md"
 classifiers=[

@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Fixed
+- Correct python version supported (>=3.7)
+
 ## [2020.06.0]
 
 ### Changed
