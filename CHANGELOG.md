@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Added
+enablement: MacOS support
+
 ## [2020.07.1]
 
 ### Changed
