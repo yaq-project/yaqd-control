@@ -18,7 +18,7 @@ Command line tools for inspecting and controlling yaq daemons.
 <h2>installation</h2>
 
 <p>
-yaqd-control can be installed via <a href="https://pypi.org/project/yaqd-control/">PyPI</a> or conda-forge.
+yaqd-control can be installed via <a href="https://pypi.org/project/yaqd-control/">PyPI</a> or <a href=https://anaconda.org/conda-forge/yaqd-control>conda-forge</a>.
 </p>
 
 <pre>
@@ -38,43 +38,7 @@ $ conda install yaqd-control
 
 <p>
 yaqd-control is a command line application.
-This quickstart will introduce the basic features of yaqd-control for a simple imaginary system.
 </p>
-
-<p>
-Scanning: yaqd-control must find the daemons before interacting with them.
-</p>
-
-<pre>
-<code>
-$ yaqd scan
-TODO: fake output
-</code>
-</pre>
-
-<p>
-Status: yaqd-control can quickly show you the status of all installed daemons.
-</p>
-
-<pre>
-<code>
-$ yaqd status
-TODO: fake output
-</code>
-</pre>
-
-<p>
-Enablement: by enabling a daemon, you allow the operating system to manage that daemon in the background.
-An enabled daemon will always start again when you restart your computer.
-After enabling, it's typical to start the daemon as well.
-</p>
-
-<pre>
-<code>
-$ yaqd enable system-monitor
-TODO: fake output
-</code>
-</pre>
 
 <p>
 Help: learn more, right from your terminal.
@@ -104,8 +68,217 @@ Commands:
 </pre>
 
 <p>
-Try `yaqd <COMMAND> --help` to learn more about a particular command.
+Try <code>yaqd <COMMAND> --help</code> to learn more about a particular command.
 </p>
+
+
+<h3>the cache</h3>
+
+<p>
+yaqd-control keeps track of known daemons, referred to as the cache
+</p>
+<p>
+Status: yaqd-control can quickly show you the status of all daemons in yaqd-control's cache.
+This is usually the most used subcommand, as it gives a quick overview of the system, which daemons are offline, and which are currently busy.
+</p>
+
+<pre>
+<code>
+$ yaqd status
++-----------+-------+--------------------------+------+---------+-------+
+| host      | port  | kind                     | name | status  | busy  |
++-----------+-------+--------------------------+------+---------+-------+
+| 127.0.0.1 | 38202 | system-monitor           | foo  | <font color=green>online</font>  | <font color=green>False</font> |
+| 127.0.0.1 | 39054 | fake-continuous-hardware | bar  | <font color=green>online</font>  | <font color=red>True</font>  |
+| 127.0.0.1 | 39055 | fake-continuous-hardware | baz  | <font color=green>online</font>  | <font color=green>False</font> |
+| 127.0.0.1 | 39056 | fake-continuous-hardware | spam | <font color=red>offline</font> | ?     |
+| 127.0.0.1 | 37067 | fake-discrete-hardware   | ham  | <font color=green>online</font>  | <font color=green>False</font> |
+| 127.0.0.1 | 37066 | fake-discrete-hardware   | eggs | <font color=green>online</font>  | <font color=green>False</font> |
++-----------+-------+--------------------------+------+---------+-------+
+</code>
+</pre>
+
+<p>
+List: this is essentially the same as <code>status</code> except that it does not attempt to contact the daemons, so it does not give you additional context.
+</p>
+
+<pre>
+<code>
+$ yaqd list
++-----------+-------+--------------------------+------+
+| host      | port  | kind                     | name |
++-----------+-------+--------------------------+------+
+| 127.0.0.1 | 38202 | system-monitor           | foo  |
+| 127.0.0.1 | 39054 | fake-continuous-hardware | bar  |
+| 127.0.0.1 | 39055 | fake-continuous-hardware | baz  |
+| 127.0.0.1 | 39056 | fake-continuous-hardware | spam |
+| 127.0.0.1 | 37067 | fake-discrete-hardware   | ham  |
+| 127.0.0.1 | 37066 | fake-discrete-hardware   | eggs |
++-----------+-------+--------------------------+------+
+</code>
+</pre>
+
+<p>
+Scan: Scanning allows you to add currently running daemons to the cache.
+</p>
+
+<pre>
+<code>
+$ yaqd scan
+scanning host 127.0.0.1 from 36000 to 39999...
+...saw unchanged daemon fake-discrete-hardware:eggs on port 37066
+...saw unchanged daemon fake-discrete-hardware:ham on port 37067
+...found new daemon system-monitor:foo on port 38202
+...found new daemon fake-continuous-hardware:bar on port 39054
+...saw unchanged daemon fake-continuous-hardware:baz on port 39055
+...known daemon fake-continuous-hardware:spam on port 39056 not responding
+...done!
+</code>
+</pre>
+
+<p>
+Scan has some additional options, passed as flags on the command line, which allow you to change the default scan range and host (for remotely accessed daemons):
+</p>
+
+<pre>
+<code>
+$ yaqd scan --help
+Usage: yaqd scan [OPTIONS]
+
+Options:
+  --host TEXT      Host to scan.
+  --start INTEGER  Scan starting point.
+  --stop INTEGER   Scan stopping point.
+  --help           Show this message and exit.
+</code>
+</pre>
+
+<p>
+Edit Config: yaqd-control provides an easy way to edit the default config file location for a daemon kind.
+This uses your default editor (EDITOR environment variable), and defaults to <code>notepad.exe</code> on Windows, and <code>vi</code> on other platforms.
+
+Using yaqd-control to edit config files means that you do not need to know the default location.
+Additionally, it does some basic validity checks (that the toml parses and that each daemon section has the <code>port</code> keyword).
+If an error is found, you are prompted to re-edit the file.
+Daemons from the config file are added to the cache.
+You may pass multiple daemon kinds, which will be opened in succession.
+</p>
+
+<pre>
+<code>
+$ yaqd edit-config fake-continuous-hardware system-monitor
+</code>
+</pre>
+
+
+<p>
+Clear Cache: Note that this is a destructive action.
+<code>clear-cache</code> deletes all daemons from the cache (thus <code>list</code> and <code>status</code> will give empty tables)
+There is no user feedback.
+</p>
+
+<pre>
+<code>
+$ yaqd clear-cache
+$ yaqd status
++------+------+------+------+--------+------+
+| host | port | kind | name | status | busy |
++------+------+------+------+--------+------+
++------+------+------+------+--------+------+
+</code>
+</pre>
+
+<h3>Running in the background</h3>
+
+<p>
+Each of the commands in this section can take multiple daemon kinds.
+</p>
+
+<p>
+Enable: by enabling a daemon, you allow the operating system to manage that daemon in the background.
+An enabled daemon will always start again when you restart your computer.
+Enabling is required for the rest of the commands in this section to work as expected.
+After enabling, it's typical to start the daemon as well, this does not happen automatically.
+
+Enablement works in slightly different ways on different platforms, but the commands are the same (don't worry if the password prompts are different).
+Currently supported platforms are Linux (systemd), MacOS (launchd) and Windows (via NSSM, bundled with the distribution).
+</p>
+
+<pre>
+<code>
+$ yaqd enable system-monitor
+[sudo] password for scipy2020:
+==== AUTHENTICATING FOR org.freedesktop.systemd1.manage-unit-files ===
+Authentication is required to manage system service or unit files.
+Password:
+==== AUTHENTICATION COMPLETE ===
+</code>
+</pre>
+
+
+<p>
+Disable: this is the inverse operation to enable, which makes it so that the daemon does not start on reboot.
+This does not affect the running daemon.
+</p>
+
+<pre>
+<code>
+$ yaqd disable system-monitor
+==== AUTHENTICATING FOR org.freedesktop.systemd1.manage-unit-files ===
+Authentication is required to manage system service or unit files.
+Password:
+==== AUTHENTICATION COMPLETE ===
+Removed /etc/systemd/system/multi-user.target.wants/yaqd-system-monitor.service.
+</code>
+</pre>
+
+<p>
+Start: This starts the daemon running in the background immediately.
+It must have been enabled to run in the background using this command.
+</p>
+
+<pre>
+<code>
+$ yaqd start system-monitor
+==== AUTHENTICATING FOR org.freedesktop.systemd1.manage-units ===
+Authentication is required to start 'yaqd-system-monitor.service'.
+Password:
+==== AUTHENTICATION COMPLETE ===
+</code>
+</pre>
+
+<p>
+Stop: This stops the daemon running in the background immediately.
+It must have been running in the background using yaqd-control (either on startup via enable or via the start command above).
+</p>
+
+<pre>
+<code>
+$ yaqd stop system-monitor
+==== AUTHENTICATING FOR org.freedesktop.systemd1.manage-units ===
+Authentication is required to stop 'yaqd-system-monitor.service'.
+Password:
+==== AUTHENTICATION COMPLETE ===
+</code>
+</pre>
+
+
+<p>
+Restart/Reload: This stops (if running) and restarts the daemon running in the background immediately.
+Reload is slightly different in that it signals to the daemon to reload its configuration rather than completely restart, but effectively it is the same as restart (and is a pure alias where such a signal is not supported).
+It must have been enabled to run in the background using this command.
+</p>
+
+<pre>
+<code>
+$ yaqd restart system-monitor
+==== AUTHENTICATING FOR org.freedesktop.systemd1.manage-units ===
+Authentication is required to restart 'yaqd-system-monitor.service'.
+Password:
+==== AUTHENTICATION COMPLETE ===
+</code>
+</pre>
+
 
 <hr>
 
