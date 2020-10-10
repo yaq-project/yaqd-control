@@ -27,6 +27,10 @@ entry:
   stage: test
   script:
     - yaqd --help
+pytest:
+  stage: test
+  script:
+    - pytest
 
 # deploy stage
 pages:

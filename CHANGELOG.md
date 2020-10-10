@@ -6,7 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 ## [Unreleased]
 
 ### Added
-enablement: MacOS support
+- enablement: MacOS support
+
+### Fixed
+- proper handling of executable discovery on Windows
 
 ## [2020.07.1]
 
