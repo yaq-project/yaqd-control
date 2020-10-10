@@ -29,6 +29,7 @@ Issues = "https://gitlab.com/yaq/yaqd-control/issues"
 
 [tool.flit.metadata.requires-extra]
 dev = ["black", "pre-commit"]
+tests = ["pytest", "pytest-subprocess"]
 
 [tool.flit.scripts]
 yaqd = "yaqd_control.__main__:main"

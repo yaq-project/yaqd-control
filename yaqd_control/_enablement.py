@@ -76,6 +76,7 @@ if sys.platform.startswith("win32"):
             subprocess.run(["where", "nssm.exe"], capture_output=True, check=True)
             .stdout.decode()
             .strip()
+            .split("\n")[0]
         )
     except Exception:
         nssm_exe = str(pathlib.Path(__file__).parent / "bin" / "nssm.exe")
@@ -164,14 +165,23 @@ def _get_executable_path(kind: str):
     )
 
 
-def _enable_for_windows(kind: str, password: str):
-    if password is None:
-        raise ValueError("Windows services require a password")
-    executable = (
+def _get_executable_path_windows(kind: str):
+    where = (
         subprocess.run(["where", f"yaqd-{kind}"], capture_output=True, check=True)
         .stdout.decode()
         .strip()
     )
+    for desired in [".exe", ".cmd"]:
+        for pth in where.split("\n"):
+            if pth.endswith(desired):
+                return pth
+    raise FileNotFoundError(f"Could not find executable {kind}")
+
+
+def _enable_for_windows(kind: str, password: str):
+    if password is None:
+        raise ValueError("Windows services require a password")
+    executable = _get_executable_path_windows(kind)
     _run_nssm_exe_by_action(
         Action.install, kind, True, executable, f"--config={_get_config_path(kind)}"
     )
@@ -186,10 +196,12 @@ def _enable_for_linux(kind: str):
         tf.flush()
         service_template_full_path = f"/etc/systemd/system/yaqd-{kind}.service"
         subprocess.run(
-            ["sudo", "cp", tf.name, service_template_full_path], check=True,
+            ["sudo", "cp", tf.name, service_template_full_path],
+            check=True,
         )
         subprocess.run(
-            ["sudo", "chmod", "+r", service_template_full_path], check=True,
+            ["sudo", "chmod", "+r", service_template_full_path],
+            check=True,
         )
     _run_systemctl_command_by_action(Action.enable, kind)
 
@@ -199,7 +211,8 @@ def _enable_for_macOS(kind: str):
         tf.write(_format_config_template(plist_file, kind))
         tf.flush()
         subprocess.run(
-            ["sudo", "cp", tf.name, plist_full_path_template.format(kind=kind)], check=True,
+            ["sudo", "cp", tf.name, plist_full_path_template.format(kind=kind)],
+            check=True,
         )
     _run_launchctl_command_by_action(Action.load, kind)
 
