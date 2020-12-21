@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+## Added
+- new --format flag on list: supports json and toml output
+
 ## [2020.10.0]
 
 ### Added
