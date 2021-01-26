@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [2021.1.0]
+
 ## Added
 - new --format flag on list: supports json and toml output
 - happi support also via yaqd list -f happi
@@ -68,7 +70,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 ### Added
 - initial release
 
-[Unreleased]: https://gitlab.com/yaq/yaqd-control/-/compare/v2020.10.0...master
+[Unreleased]: https://gitlab.com/yaq/yaqd-control/-/compare/v2021.1.0...master
+[2021.1.0]: https://gitlab.com/yaq/yaqd-control/-/compare/v2020.10.0...v2021.1.0
 [2020.10.0]: https://gitlab.com/yaq/yaqd-control/-/compare/v2020.07.0...v2020.10.0
 [2020.07.1]: https://gitlab.com/yaq/yaqd-control/-/compare/v2020.07.0...v2020.07.1
 [2020.07.0]: https://gitlab.com/yaq/yaqd-control/-/compare/v2020.06.0...v2020.07.0
