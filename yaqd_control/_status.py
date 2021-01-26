@@ -24,7 +24,14 @@ def status():
         try:
             c = yaqc.Client(host=daemon.host, port=daemon.port)
             out.add_row(
-                [daemon.host, daemon.port, daemon.kind, daemon.name, "online", c.busy(),]
+                [
+                    daemon.host,
+                    daemon.port,
+                    daemon.kind,
+                    daemon.name,
+                    "online",
+                    c.busy(),
+                ]
             )
         except Exception as e:
             print(e)

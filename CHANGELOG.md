@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## Added
 - new --format flag on list: supports json and toml output
+- happi support also via yaqd list -f happi
 
 ## [2020.10.0]
 
