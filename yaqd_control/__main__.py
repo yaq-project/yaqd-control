@@ -59,7 +59,8 @@ def edit_config(kind):
             except Exception:
 
                 if not click.confirm(
-                    "Error updating cache. Would you like to re-edit the config?", default=True,
+                    "Error updating cache. Would you like to re-edit the config?",
+                    default=True,
                 ):
                     break
 
@@ -74,7 +75,7 @@ def _status():
     "--format",
     "-f",
     default="prettytable",
-    type=click.Choice(["prettytable", "json", "toml"], case_sensitive=False),
+    type=click.Choice(["prettytable", "json", "toml", "happi"], case_sensitive=False),
     help="Output format",
 )
 def _list(format=format):
@@ -91,7 +92,12 @@ def _parse_kinds(daemon, all_):
 
 
 all_option = click.option(
-    "-a", "--all", "all_", is_flag=True, default=False, help="Apply to all known daemons.",
+    "-a",
+    "--all",
+    "all_",
+    is_flag=True,
+    default=False,
+    help="Apply to all known daemons.",
 )
 
 
