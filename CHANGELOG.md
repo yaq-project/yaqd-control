@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 ## Added
 - new --format flag on list: supports json and toml output
 - happi support also via yaqd list -f happi
+- enhancement for daemon inputs: yaqd-daemon and daemon both valid inputs
 
 ## [2020.10.0]
 

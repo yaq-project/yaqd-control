@@ -83,12 +83,21 @@ def _list(format=format):
     click.echo(out)
 
 
+def _parse_name(daemon):
+    daemonList = list(daemon)
+    for i, d in enumerate(daemon):
+        if d.startswith('yaqd-'):
+            daemonList[i] = d[5:]
+    return tuple(daemonList)
+
 def _parse_kinds(daemon, all_):
     known_daemons = read_daemon_cache()
     known_kinds = set(d.kind for d in known_daemons)
     if all_:
         daemon = known_kinds
+    daemon = _parse_name(daemon)
     return daemon
+
 
 all_option = click.option(
     "-a",
