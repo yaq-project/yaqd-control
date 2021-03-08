@@ -177,5 +177,16 @@ def _reload(daemon, all_=False):
         reload(d)
 
 
+@main.command(name="nssm")
+@click.argument("args", nargs=-1)
+def _nssm(args):
+    """Windows-only pass-through for bundled NSSM."""
+    here = pathlib.Path(__file__).parent
+    path = here / "bin" / "nssm.exe"
+    args = list(args)
+    args.insert(0, path)
+    subprocess.Popen(args)
+
+
 if __name__ == "__main__":
     main()

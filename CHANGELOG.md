@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Added
+- pass-through for nssm
+
 ## [2021.1.0]
 
 ## Added
