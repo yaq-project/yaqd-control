@@ -5,12 +5,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Fixed
+- bug with spaces in usernames on Windows
+
 ### Added
 - pass-through for nssm
 
 ## [2021.1.0]
 
-## Added
+### Added
 - new --format flag on list: supports json and toml output
 - happi support also via yaqd list -f happi
 - enhancement for daemon inputs: yaqd-daemon and daemon both valid inputs
