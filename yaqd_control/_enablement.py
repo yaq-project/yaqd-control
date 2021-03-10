@@ -183,7 +183,7 @@ def _enable_for_windows(kind: str, password: str):
         raise ValueError("Windows services require a password")
     executable = _get_executable_path_windows(kind)
     _run_nssm_exe_by_action(
-        Action.install, kind, True, executable, f"--config={_get_config_path(kind)}"
+        Action.install, kind, True, executable, f'--config="{_get_config_path(kind)}"'
     )
     _run_nssm_exe_by_action(
         Action.set, kind, True, "ObjectName", f".\\{getpass.getuser()}", password
