@@ -73,7 +73,7 @@ class Action(str, Enum):
 if sys.platform.startswith("win32"):
     try:
         nssm_exe = (
-            subprocess.run(["where", "nssm.exe"], capture_output=True, check=True)
+            subprocess.run(["where.exe", "nssm.exe"], capture_output=True, check=True)
             .stdout.decode()
             .strip()
             .split("\n")[0]
@@ -167,7 +167,7 @@ def _get_executable_path(kind: str):
 
 def _get_executable_path_windows(kind: str):
     where = (
-        subprocess.run(["where", f"yaqd-{kind}"], capture_output=True, check=True)
+        subprocess.run(["where.exe", f"yaqd-{kind}"], capture_output=True, check=True)
         .stdout.decode()
         .strip()
     )

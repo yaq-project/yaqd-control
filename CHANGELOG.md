@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ### Fixed
 - bug with spaces in usernames on Windows
+- Execution of commands on powershell, for which `where.exe` was hidden by the shell
 
 ### Added
 - pass-through for nssm
