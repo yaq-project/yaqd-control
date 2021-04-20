@@ -22,8 +22,29 @@ def main():
     pass
 
 
+debug_option = click.option(
+    "--debug",
+    "debug",
+    is_flag=True,
+    default=False,
+)
+
+
+all_option = click.option(
+    "-a",
+    "--all",
+    "all_",
+    is_flag=True,
+    default=False,
+    help="Apply to all known daemons.",
+)
+
+
 @main.command(name="clear-cache")
-def _clear_cache():
+@debug_option
+def _clear_cache(debug=False):
+    if not debug:
+        sys.tracebacklimit = 0
     clear_cache()
 
 
@@ -31,13 +52,19 @@ def _clear_cache():
 @click.option("--host", default="127.0.0.1", help="Host to scan.")
 @click.option("--start", default=36000, help="Scan starting point.")
 @click.option("--stop", default=39999, help="Scan stopping point.")
-def _scan(host, start, stop):
+@debug_option
+def _scan(host, start, stop, debug=False):
+    if not debug:
+        sys.tracebacklimit = 0
     scan(host=host, start=start, stop=stop)
 
 
 @main.command(name="edit-config")
 @click.argument("kind", nargs=-1)
-def edit_config(kind):
+@debug_option
+def edit_config(kind, debug=False):
+    if not debug:
+        sys.tracebacklimit = 0
     for k in kind:
         try:
             dd = next(d for d in read_daemon_cache() if d.kind == k)
@@ -66,7 +93,10 @@ def edit_config(kind):
 
 
 @main.command(name="status")
-def _status():
+@debug_option
+def _status(debug=False):
+    if not debug:
+        sys.tracebacklimit = 0
     status()
 
 
@@ -78,7 +108,10 @@ def _status():
     type=click.Choice(["prettytable", "json", "toml", "happi"], case_sensitive=False),
     help="Output format",
 )
-def _list(format=format):
+@debug_option
+def _list(format=format, debug=False):
+    if not debug:
+        sys.tracebacklimit = 0
     out = list_(format=format)
     click.echo(out)
 
@@ -86,9 +119,10 @@ def _list(format=format):
 def _parse_name(daemon):
     daemonList = list(daemon)
     for i, d in enumerate(daemon):
-        if d.startswith('yaqd-'):
+        if d.startswith("yaqd-"):
             daemonList[i] = d[5:]
     return tuple(daemonList)
+
 
 def _parse_kinds(daemon, all_):
     known_daemons = read_daemon_cache()
@@ -99,18 +133,9 @@ def _parse_kinds(daemon, all_):
     return daemon
 
 
-all_option = click.option(
-    "-a",
-    "--all",
-    "all_",
-    is_flag=True,
-    default=False,
-    help="Apply to all known daemons.",
-)
-
-
 @main.command(name="enable")
 @click.argument("daemon", nargs=-1)
+@debug_option
 @all_option
 @click.option(
     "--password",
@@ -119,7 +144,9 @@ all_option = click.option(
     hide_input=True,
     help="Password for user account, only used on Windows",
 )
-def _enable(daemon, all_=False, password=None):
+def _enable(daemon, all_=False, password=None, debug=False):
+    if not debug:
+        sys.tracebacklimit = 0
     daemon = _parse_kinds(daemon, all_)
     for d in daemon:
         if d.endswith(".toml"):
@@ -134,8 +161,11 @@ def _enable(daemon, all_=False, password=None):
 
 @main.command(name="disable")
 @click.argument("daemon", nargs=-1)
+@debug_option
 @all_option
-def _disable(daemon, all_=False):
+def _disable(daemon, all_=False, debug=False):
+    if not debug:
+        sys.tracebacklimit = 0
     daemon = _parse_kinds(daemon, all_)
     for d in daemon:
         disable(d)
@@ -143,8 +173,11 @@ def _disable(daemon, all_=False):
 
 @main.command(name="start")
 @click.argument("daemon", nargs=-1)
+@debug_option
 @all_option
-def _start(daemon, all_=False):
+def _start(daemon, all_=False, debug=False):
+    if not debug:
+        sys.tracebacklimit = 0
     daemon = _parse_kinds(daemon, all_)
     for d in daemon:
         start(d)
@@ -152,8 +185,11 @@ def _start(daemon, all_=False):
 
 @main.command(name="stop")
 @click.argument("daemon", nargs=-1)
+@debug_option
 @all_option
-def _stop(daemon, all_=False):
+def _stop(daemon, all_=False, debug=False):
+    if not debug:
+        sys.tracebacklimit = 0
     daemon = _parse_kinds(daemon, all_)
     for d in daemon:
         stop(d)
@@ -161,8 +197,11 @@ def _stop(daemon, all_=False):
 
 @main.command(name="restart")
 @click.argument("daemon", nargs=-1)
+@debug_option
 @all_option
-def _restart(daemon, all_=False):
+def _restart(daemon, all_=False, debug=False):
+    if not debug:
+        sys.tracebacklimit = 0
     daemon = _parse_kinds(daemon, all_)
     for d in daemon:
         restart(d)
@@ -170,8 +209,11 @@ def _restart(daemon, all_=False):
 
 @main.command(name="reload")
 @click.argument("daemon", nargs=-1)
+@debug_option
 @all_option
-def _reload(daemon, all_=False):
+def _reload(daemon, all_=False, debug=False):
+    if not debug:
+        sys.tracebacklimit = 0
     daemon = _parse_kinds(daemon, all_)
     for d in daemon:
         reload(d)
@@ -179,8 +221,11 @@ def _reload(daemon, all_=False):
 
 @main.command(name="nssm")
 @click.argument("args", nargs=-1)
-def _nssm(args):
+@debug_option
+def _nssm(args, debug=False):
     """Windows-only pass-through for bundled NSSM."""
+    if not debug:
+        sys.tracebacklimit = 0
     here = pathlib.Path(__file__).parent
     path = here / "bin" / "nssm.exe"
     args = list(args)

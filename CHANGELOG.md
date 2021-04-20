@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 - Execution of commands on powershell, for which `where.exe` was hidden by the shell
 
 ### Added
+- new option --debug to all commands
 - pass-through for nssm
 
 ## [2021.1.0]
