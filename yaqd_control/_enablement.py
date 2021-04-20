@@ -232,7 +232,13 @@ def _run_nssm_exe_by_action(action: Action, kind: str, check: bool = False, *add
     command = [nssm_exe, action, yaq_kind_template.format(kind=kind)]
     for arg in additional_args:
         command.append(arg)
-    subprocess.run(command, check=check)
+    try:
+        subprocess.run(command, check=check)
+    except subprocess.CalledProcessError as e:
+        if e.args[0] == 3: # error code for access denied
+            raise ValueError("Username or password are incorrect or you do not have adminstrative access, please try again") from None
+        else:
+            raise
 
 
 def _run_systemctl_command_by_action(action: Action, kind: str):
