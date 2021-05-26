@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [2021.5.0]
+
 ### Fixed
 - bug with spaces in usernames on Windows
 - Execution of commands on powershell, for which `where.exe` was hidden by the shell
@@ -12,10 +14,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 ### Added
 - new option --debug to all commands
 - pass-through for nssm
-
-## [2021.1.0]
-
-### Added
 - new --format flag on list: supports json and toml output
 - happi support also via yaqd list -f happi
 - enhancement for daemon inputs: yaqd-daemon and daemon both valid inputs
@@ -79,8 +77,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 ### Added
 - initial release
 
-[Unreleased]: https://gitlab.com/yaq/yaqd-control/-/compare/v2021.1.0...master
-[2021.1.0]: https://gitlab.com/yaq/yaqd-control/-/compare/v2020.10.0...v2021.1.0
+[Unreleased]: https://gitlab.com/yaq/yaqd-control/-/compare/v2021.5.0...master
+[2021.5.0]: https://gitlab.com/yaq/yaqd-control/-/compare/v2020.10.0...v2021.5.0
 [2020.10.0]: https://gitlab.com/yaq/yaqd-control/-/compare/v2020.07.0...v2020.10.0
 [2020.07.1]: https://gitlab.com/yaq/yaqd-control/-/compare/v2020.07.0...v2020.07.1
 [2020.07.0]: https://gitlab.com/yaq/yaqd-control/-/compare/v2020.06.0...v2020.07.0
