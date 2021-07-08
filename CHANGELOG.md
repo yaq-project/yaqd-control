@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Changed
+- pinned to toml>=0.10.2 for type stubs
+
 ## [2021.5.0]
 
 ### Fixed

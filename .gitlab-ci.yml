@@ -16,6 +16,7 @@ before_script:
   - pip install -U flit
   - pip install -U pytest
   - pip install -U mypy
+  - pip install -U types-toml
   - FLIT_ROOT_INSTALL=1 flit install
 
 # test stage
