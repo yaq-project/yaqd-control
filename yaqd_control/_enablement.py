@@ -235,8 +235,10 @@ def _run_nssm_exe_by_action(action: Action, kind: str, check: bool = False, *add
     try:
         subprocess.run(command, check=check)
     except subprocess.CalledProcessError as e:
-        if e.args[0] == 3: # error code for access denied
-            raise ValueError("Username or password are incorrect or you do not have adminstrative access, please try again") from None
+        if e.args[0] == 3:  # error code for access denied
+            raise ValueError(
+                "Username or password are incorrect or you do not have adminstrative access, please try again"
+            ) from None
         else:
             raise
 
