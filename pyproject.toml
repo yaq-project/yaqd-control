@@ -9,7 +9,7 @@ author = "yaq developers"
 author-email = "git@ksunden.space"
 home-page = "https://yaq.fyi"
 requires-python = ">=3.7"
-requires = ["appdirs", "toml>=0.10.2", "click", "prettytable!=1.0.0", "colorama", "yaqc"]
+requires = ["appdirs", "toml>=0.10.2", "click", "prettytable!=1.0.0", "rich", "yaqc"]
 description-file="README.md"
 classifiers=[
         "Development Status :: 2 - Pre-Alpha",
