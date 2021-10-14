@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ### Changed
 - pinned to toml>=0.10.2 for type stubs
+- Use `rich` for `yaqd status` table with live updating and parallel queries
 
 ## [2021.5.0]
 

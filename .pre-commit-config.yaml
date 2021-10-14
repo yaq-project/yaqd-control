@@ -13,4 +13,5 @@ repos:
     hooks:
       - id: mypy
         exclude: ^docs/conf.py
+        additional_dependencies: [types-toml]
 

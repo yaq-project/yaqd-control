@@ -93,11 +93,14 @@ def edit_config(kind, debug=False):
 
 
 @main.command(name="status")
+@click.option(
+    "--force-color", "-c", default=False, is_flag=True, type=bool, help="Force color output"
+)
 @debug_option
-def _status(debug=False):
+def _status(force_color=False, debug=False):
     if not debug:
         sys.tracebacklimit = 0
-    status()
+    status(force_color)
 
 
 @main.command(name="list")
