@@ -42,7 +42,7 @@ pages:
     paths:
     - public/
   only:
-  - master
+  - main
 flit:
   stage: deploy
   script:
