@@ -77,7 +77,9 @@ def edit_config(kind, debug=False):
         while True:
             if sys.platform.startswith("win32"):
                 config_filepath = str(config_filepath)
-                subprocess.run([os.environ.get("EDITOR", "notepad.exe"), config_filepath])
+                import shutil
+                editor = shutil.which(os.environ.get("EDITOR", "notepad.exe"))
+                subprocess.run([editor, config_filepath])
             else:
                 subprocess.run([os.environ.get("EDITOR", "vi"), config_filepath])
             try:

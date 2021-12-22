@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Fixed
+- fixed bug where edit-config did not correctly call certain `%EDITOR%`s on Windows
+
 ### [2021.10.0]
 
 ### Changed
