@@ -6,13 +6,12 @@ build-backend = "flit_core.buildapi"
 module = "yaqd_control"
 dist-name = "yaqd-control"
 author = "yaq developers"
-author-email = "git@ksunden.space"
 home-page = "https://yaq.fyi"
 requires-python = ">=3.7"
 requires = ["appdirs", "toml>=0.10.2", "click", "prettytable!=1.0.0", "rich", "yaqc"]
 description-file="README.md"
 classifiers=[
-        "Development Status :: 2 - Pre-Alpha",
+        "Development Status :: 4 - Beta",
 	"Intended Audience :: Science/Research",
 	"License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
 	"Natural Language :: English",
@@ -23,9 +22,9 @@ classifiers=[
 ]
 
 [tool.flit.metadata.urls]
-Source = "https://gitlab.com/yaq/yaqd-control"
+Source = "https://github.com/yaq-project/yaqd-control"
 Documentation = "https://control.yaq.fyi"
-Issues = "https://gitlab.com/yaq/yaqd-control/issues"
+Issues = "https://github.com/yaq-project/yaqd-control/issues"
 
 [tool.flit.metadata.requires-extra]
 dev = ["black", "pre-commit"]
