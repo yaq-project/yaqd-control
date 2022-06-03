@@ -9,3 +9,8 @@
 
 Command line tools for inspecting and controlling yaq daemons.
 https://control.yaq.fyi/
+
+## package maintainers
+
+- [Blaise Thompson](https://github.com/untzag)
+- [Kyle Sunden](https://github.com/ksunden)
