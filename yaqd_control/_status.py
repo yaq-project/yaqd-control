@@ -29,7 +29,7 @@ def fill_error(e, online_text, busy_text):
     busy_text.append("?", style="red")
 
 
-def status(force_color=False):
+def status(force_color=False, as_list=False):
     pool = Pool()
     table = Table()
     for field in ["host", "port", "kind", "name", "status", "busy"]:
@@ -66,3 +66,26 @@ def status(force_color=False):
         # Wait for all the results before exiting live view
         for r in results:
             r.wait()
+    if as_list:
+        list_=list()
+        col_length=len(table.columns)
+        row_length=table.row_count
+        for i in range(col_length):
+            col=table.columns[i]._cells
+            list_.append(col)
+        tuple_=list(zip(*list_))
+        
+        out=list()
+        for i in range(len(tuple_)):
+            temp=tuple_[i]
+            temp2=list()
+            for k in range(len(temp)):
+                if k==4:
+                    temp2.append(str(temp[k]))
+                elif k==5:
+                    temp2.append(str(temp[k]))
+                else:
+                    temp2.append(temp[k])
+            out.append(temp2)
+        return out
+    return

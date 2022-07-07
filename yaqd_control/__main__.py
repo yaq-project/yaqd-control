@@ -100,10 +100,10 @@ def edit_config(kind, debug=False):
     "--force-color", "-c", default=False, is_flag=True, type=bool, help="Force color output"
 )
 @debug_option
-def _status(force_color=False, debug=False):
+def _status(force_color, as_list=False, debug=False):
     if not debug:
         sys.tracebacklimit = 0
-    status(force_color)
+    status(force_color=force_color, as_list=False)
 
 
 @main.command(name="list")
