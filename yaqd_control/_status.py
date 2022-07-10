@@ -67,22 +67,22 @@ def status(force_color=False, as_list=False):
         for r in results:
             r.wait()
     if as_list:
-        list_=list()
-        col_length=len(table.columns)
-        row_length=table.row_count
+        list_ = list()
+        col_length = len(table.columns)
+        row_length = table.row_count
         for i in range(col_length):
-            col=table.columns[i]._cells
+            col = table.columns[i]._cells
             list_.append(col)
-        tuple_=list(zip(*list_))
-        
-        out=list()
+        tuple_ = list(zip(*list_))
+
+        out = list()
         for i in range(len(tuple_)):
-            temp=tuple_[i]
-            temp2=list()
+            temp = tuple_[i]
+            temp2 = list()
             for k in range(len(temp)):
-                if k==4:
+                if k == 4:
                     temp2.append(str(temp[k]))
-                elif k==5:
+                elif k == 5:
                     temp2.append(str(temp[k]))
                 else:
                     temp2.append(temp[k])
