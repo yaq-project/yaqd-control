@@ -87,7 +87,6 @@ def edit_config(kind, debug=False):
                 add_config(config_filepath)
                 break
             except Exception:
-
                 if not click.confirm(
                     "Error updating cache. Would you like to re-edit the config?",
                     default=True,
