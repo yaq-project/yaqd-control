@@ -71,7 +71,7 @@ def edit_config(kind, debug=False):
             config_filepath = pathlib.Path(dd.config_filepath)
         except:
             config_filepath = (
-                pathlib.Path(platformdirs.user_config_dir("yaqd", "yaq")) / k / "config.toml"
+                platformdirs.user_config_path("yaqd", "yaq") / k / "config.toml"
             )
         config_filepath.parent.mkdir(parents=True, exist_ok=True)
         while True:
