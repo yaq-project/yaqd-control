@@ -2,13 +2,13 @@ __all__ = ["read_daemon_cache", "write_daemon_cache"]
 
 
 import pathlib
-import appdirs  # type: ignore
+import platformdirs  # type: ignore
 import toml
 from ._daemon_data import DaemonData
 
 
 daemon_cache_path = (
-    pathlib.Path(appdirs.user_cache_dir(appname="yaqd-control", appauthor="yaq"))
+    pathlib.Path(platformdirs.user_cache_dir(appname="yaqd-control", appauthor="yaq"))
     / "daemon-cache.toml"
 )
 
