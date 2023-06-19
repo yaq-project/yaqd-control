@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Changed
+- Upgraded appdirs to platformdirs
+
 ### [2022.4.0]
 
 ### Fixed
