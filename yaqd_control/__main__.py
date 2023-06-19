@@ -70,9 +70,7 @@ def edit_config(kind, debug=False):
             dd = next(d for d in read_daemon_cache() if d.kind == k)
             config_filepath = pathlib.Path(dd.config_filepath)
         except:
-            config_filepath = (
-                platformdirs.user_config_path("yaqd", "yaq") / k / "config.toml"
-            )
+            config_filepath = platformdirs.user_config_path("yaqd", "yaq") / k / "config.toml"
         config_filepath.parent.mkdir(parents=True, exist_ok=True)
         while True:
             if sys.platform.startswith("win32"):

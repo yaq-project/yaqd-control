@@ -8,8 +8,7 @@ from ._daemon_data import DaemonData
 
 
 daemon_cache_path = (
-    platformdirs.user_cache_path(appname="yaqd-control", appauthor="yaq")
-    / "daemon-cache.toml"
+    platformdirs.user_cache_path(appname="yaqd-control", appauthor="yaq") / "daemon-cache.toml"
 )
 
 daemon_cache_path.parent.mkdir(parents=True, exist_ok=True)
