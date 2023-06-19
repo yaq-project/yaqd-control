@@ -223,7 +223,9 @@ def _get_config_path(kind: str):
         daemon_data = next(d for d in known_daemons if d.kind == kind)
         config_path = daemon_data.config_filepath
     except:
-        config_path = pathlib.Path(platformdirs.user_config_dir("yaqd", "yaq")) / kind / "config.toml"
+        config_path = (
+            pathlib.Path(platformdirs.user_config_dir("yaqd", "yaq")) / kind / "config.toml"
+        )
         add_config(config_path)
     return config_path
 
