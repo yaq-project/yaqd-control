@@ -2,7 +2,10 @@ __all__ = ["read_daemon_cache", "write_daemon_cache"]
 
 
 import pathlib
-import platformdirs  # type: ignore
+import re
+import warnings
+
+import platformdirs
 import toml
 from ._daemon_data import DaemonData
 
@@ -61,9 +64,17 @@ def add_config(filepath):
     kind = filepath.parent.name
     if kind.startswith("yaqd-"):
         kind = kind[5:]
+    ident = re.compile("^[a-zA-z_][a-zA-Z0-9_]*$")
     for k, v in dic.items():
         if k in ("enable", "shared-settings"):
             continue
+        if ident.match(k) is None:
+            warnings.warn(
+                f"Daemon named {k!r} may have incompatibilities with external systems"
+                "such as happi. Using a name which consists of only alphanumeric ASCII"
+                "characters or '_' (and not starting with a number) is recommended."
+            )
+
         dd = DaemonData(
             kind=kind,
             host="127.0.0.1",

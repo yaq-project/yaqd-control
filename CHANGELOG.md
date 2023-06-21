@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ### Changed
 - Upgraded appdirs to platformdirs
+- Warn for unexpected characters in daemon names
 
 ### [2022.4.0]
 
