@@ -5,9 +5,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+## [2023.6.0]
+
 ### Changed
 - Upgraded appdirs to platformdirs
 - Warn for unexpected characters in daemon names
+- Switch to hatchling
+
+### Added
+- Timeout for scan, including handling of scanning non-yaq ports
 
 ### [2022.4.0]
 
@@ -92,7 +98,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 ### Added
 - initial release
 
-[Unreleased]: https://gitlab.com/yaq/yaqd-control/-/compare/v2022.4.0...main
+[Unreleased]: https://gitlab.com/yaq/yaqd-control/-/compare/v2023.6.0...main
+[2023.6.0]: https://gitlab.com/yaq/yaqd-control/-/compare/v2022.4.0...v2023.6.0
 [2022.4.0]: https://gitlab.com/yaq/yaqd-control/-/compare/v2021.10.0...v2022.4.0
 [2021.10.0]: https://gitlab.com/yaq/yaqd-control/-/compare/v2021.5.0...v2021.10.0
 [2021.5.0]: https://gitlab.com/yaq/yaqd-control/-/compare/v2020.10.0...v2021.5.0
