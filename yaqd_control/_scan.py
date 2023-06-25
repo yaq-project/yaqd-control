@@ -23,7 +23,7 @@ def scan(host="127.0.0.1", start=36000, stop=39999):
     for i in range(start, stop + 1):
         kwargs = dict()
         try:
-            c = yaqc.Client(host=host, port=i)
+            c = yaqc.Client(host=host, port=i, timeout=0.1)
             kwargs["host"] = host
             kwargs["port"] = i
             kwargs["kind"] = c.id()["kind"]
@@ -33,6 +33,8 @@ def scan(host="127.0.0.1", start=36000, stop=39999):
             kwargs["model"] = c.id()["model"]
             kwargs["serial"] = c.id()["serial"]
         except Exception as e:
+            if isinstance(e, socket.timeout):
+                print(f"...port {i} is open but does not appear to be a yaq daemon")
             if i in old_ports.keys():
                 kind = old_ports[i].kind
                 name = old_ports[i].name
