@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Fixed
+- `yaqd enable` allows one to specify the conda environment 
+
 ## [2023.6.0]
 
 ### Changed
