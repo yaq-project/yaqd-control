@@ -166,15 +166,14 @@ def _get_executable_path(kind: str):
     )
 
 
-def _get_executable_path_windows(kind: str, conda_env: Optional[str]=None):
-    run = ["where.exe", f"yaqd-{kind}"] if conda_env is None \
-        else ["conda", "activate", conda_env, "|", "where.exe", f"yaqd-{kind}"]        
-    where = (
-        subprocess.run(run, capture_output=True, check=True)
-        .stdout.decode()
-        .strip()
+def _get_executable_path_windows(kind: str, conda_env: Optional[str] = None):
+    run = (
+        ["where.exe", f"yaqd-{kind}"]
+        if conda_env is None
+        else ["conda", "activate", conda_env, "|", "where.exe", f"yaqd-{kind}"]
     )
-    
+    where = subprocess.run(run, capture_output=True, check=True).stdout.decode().strip()
+
     for desired in [".exe", ".cmd"]:
         for pth in where.split("\n"):
             if pth.endswith(desired):
@@ -182,7 +181,7 @@ def _get_executable_path_windows(kind: str, conda_env: Optional[str]=None):
     raise FileNotFoundError(f"Could not find executable {kind}")
 
 
-def _enable_for_windows(kind: str, password: str, conda_env: Optional[str]=None):
+def _enable_for_windows(kind: str, password: str, conda_env: Optional[str] = None):
     if password is None:
         raise ValueError("Windows services require a password")
     executable = _get_executable_path_windows(kind, conda_env=conda_env)
