@@ -5,6 +5,7 @@ import pathlib
 import subprocess
 import sys
 import tempfile
+from typing import Optional
 
 import platformdirs  # type: ignore
 
