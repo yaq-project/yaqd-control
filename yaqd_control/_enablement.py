@@ -5,6 +5,7 @@ import pathlib
 import subprocess
 import sys
 import tempfile
+from typing import Optional
 
 import platformdirs  # type: ignore
 
@@ -82,9 +83,9 @@ if sys.platform.startswith("win32"):
         nssm_exe = str(pathlib.Path(__file__).parent / "bin" / "nssm.exe")
 
 
-def enable(kind, password=None):
+def enable(kind, password=None, conda_env=None):
     if sys.platform.startswith("win32"):
-        _enable_for_windows(kind, password)
+        _enable_for_windows(kind, password, conda_env)
     elif sys.platform.startswith("linux"):
         _enable_for_linux(kind)
     elif sys.platform.startswith("darwin"):
@@ -165,12 +166,14 @@ def _get_executable_path(kind: str):
     )
 
 
-def _get_executable_path_windows(kind: str):
-    where = (
-        subprocess.run(["where.exe", f"yaqd-{kind}"], capture_output=True, check=True)
-        .stdout.decode()
-        .strip()
+def _get_executable_path_windows(kind: str, conda_env: Optional[str] = None):
+    run = (
+        ["where.exe", f"yaqd-{kind}"]
+        if conda_env is None
+        else ["conda", "activate", conda_env, "|", "where.exe", f"yaqd-{kind}"]
     )
+    where = subprocess.run(run, capture_output=True, check=True).stdout.decode().strip()
+
     for desired in [".exe", ".cmd"]:
         for pth in where.split("\n"):
             if pth.endswith(desired):
@@ -178,10 +181,10 @@ def _get_executable_path_windows(kind: str):
     raise FileNotFoundError(f"Could not find executable {kind}")
 
 
-def _enable_for_windows(kind: str, password: str):
+def _enable_for_windows(kind: str, password: str, conda_env: Optional[str] = None):
     if password is None:
         raise ValueError("Windows services require a password")
-    executable = _get_executable_path_windows(kind)
+    executable = _get_executable_path_windows(kind, conda_env=conda_env)
     _run_nssm_exe_by_action(
         Action.install, kind, True, executable, f'--config="{_get_config_path(kind)}"'
     )

@@ -147,7 +147,11 @@ def _parse_kinds(daemon, all_):
     hide_input=True,
     help="Password for user account, only used on Windows",
 )
-def _enable(daemon, all_=False, password=None, debug=False):
+@click.option(
+    "--conda_env",
+    help="Name of conda environment. Only for Conda, only for Windows",
+)
+def _enable(daemon, all_=False, password=None, conda_env=None, debug=False):
     if not debug:
         sys.tracebacklimit = 0
     daemon = _parse_kinds(daemon, all_)
@@ -159,7 +163,7 @@ def _enable(daemon, all_=False, password=None, debug=False):
             d = next(
                 dd.kind for dd in known_daemons if pathlib.Path(dd.config_filepath).absolute() == d
             )
-        enable(d, password)
+        enable(d, password, conda_env)
 
 
 @main.command(name="disable")
