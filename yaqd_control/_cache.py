@@ -9,7 +9,6 @@ import platformdirs
 import toml
 from ._daemon_data import DaemonData
 
-
 daemon_cache_path = (
     platformdirs.user_cache_path(appname="yaqd-control", appauthor="yaq") / "daemon-cache.toml"
 )
