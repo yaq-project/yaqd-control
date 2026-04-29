@@ -42,7 +42,7 @@ def read_daemon_cache():
     return out
 
 
-def write_to_daemon_cache(*daemon_data: DaemonData):
+def write_to_daemon_cache(*daemon_datas: DaemonData):
     # read
     try:
         with open(daemon_cache_path, "r") as f:
@@ -50,7 +50,8 @@ def write_to_daemon_cache(*daemon_data: DaemonData):
     except FileNotFoundError:
         dic = {}
     # extend
-    dic[f"{daemon_data.host}:{daemon_data.port}"] = daemon_data.as_dict()
+    for daemon_data in daemon_datas:
+        dic[f"{daemon_data.host}:{daemon_data.port}"] = daemon_data.as_dict()
     # write
     with open(daemon_cache_path, "wt") as f:
         toml.dump(dic, f)
