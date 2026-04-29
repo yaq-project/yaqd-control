@@ -56,7 +56,7 @@ yaq_kind_template = "yaqd-{kind}"
 nssm_exe = ""
 
 
-class Action(str, Enum):
+class Action(Enum):
     disable = "disable"
     enable = "enable"
     install = "install"
