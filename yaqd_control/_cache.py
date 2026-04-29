@@ -35,14 +35,14 @@ def read_daemon_cache():
         dic = {}
     # process
     out = []
-    for v in sorted(dic.values(), key=lambda v:tuple(v["host"], v["port"]) ):
+    for v in sorted(dic.values(), key=lambda v: tuple(v["host"], v["port"])):
         dd = DaemonData(**v)
         out.append(dd)
     # return
     return out
 
 
-def write_to_daemon_cache(*daemon_data:DaemonData):
+def write_to_daemon_cache(*daemon_data: DaemonData):
     # read
     try:
         with open(daemon_cache_path, "r") as f:

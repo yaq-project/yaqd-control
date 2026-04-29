@@ -62,9 +62,15 @@ def status(force_color=False):
                 pool.apply_async(
                     connect,
                     (daemon,),
-                    callback=partial(fill, online_text=online_text, busy_text=busy_text, name_text=name_text),
+                    callback=partial(
+                        fill, online_text=online_text, busy_text=busy_text, name_text=name_text
+                    ),
                     error_callback=partial(
-                        fill_error, online_text=online_text, busy_text=busy_text, name_text=name_text, daemon=daemon
+                        fill_error,
+                        online_text=online_text,
+                        busy_text=busy_text,
+                        name_text=name_text,
+                        daemon=daemon,
                     ),
                 )
             )
