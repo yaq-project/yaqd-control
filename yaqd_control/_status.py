@@ -16,17 +16,20 @@ from ._cache import read_daemon_cache
 def connect(daemon):
     c = yaqc.Client(host=daemon.host, port=daemon.port)
     busy = c.busy()
-    return busy
+    name = c.id()["name"]
+    return busy, name
 
 
-def fill(busy, online_text, busy_text):
+def fill(busy, name, online_text, busy_text, name_text):
     online_text.append("online", style="green")
     busy_text.append(str(busy), style="red" if busy else "green")
+    name_text.append(name)
 
 
-def fill_error(e, online_text, busy_text):
+def fill_error(e, online_text, busy_text, name_text, name_fallback):
     online_text.append("offline", style="red")
     busy_text.append("?", style="red")
+    name_text.append(name_fallback)
 
 
 def status(force_color=False):
@@ -44,11 +47,12 @@ def status(force_color=False):
         for daemon in read_daemon_cache():
             online_text = Text("")
             busy_text = Text("")
+            name_text = Text("")
             table.add_row(
                 daemon.host,
                 str(daemon.port),
                 daemon.kind,
-                daemon.name,
+                name_text,
                 online_text,
                 busy_text,
             )
@@ -56,9 +60,9 @@ def status(force_color=False):
                 pool.apply_async(
                     connect,
                     (daemon,),
-                    callback=partial(fill, online_text=online_text, busy_text=busy_text),
+                    callback=partial(fill, online_text=online_text, busy_text=busy_text, name_text=name_text),
                     error_callback=partial(
-                        fill_error, online_text=online_text, busy_text=busy_text
+                        fill_error, online_text=online_text, busy_text=busy_text, name_text=name_text, name_fallback=daemon.name
                     ),
                 )
             )
