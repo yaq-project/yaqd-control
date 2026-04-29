@@ -43,7 +43,7 @@ def read_daemon_cache():
     return out
 
 
-def write_to_daemon_cache(daemon_data):
+def write_to_daemon_cache(*daemon_data:DaemonData):
     # read
     try:
         with open(daemon_cache_path, "r") as f:

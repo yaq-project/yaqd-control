@@ -10,7 +10,7 @@ from rich.console import Console
 
 import yaqc  # type: ignore
 
-from ._cache import read_daemon_cache
+from ._cache import read_daemon_cache, write_to_daemon_cache
 
 
 def connect(daemon):
@@ -20,10 +20,11 @@ def connect(daemon):
     return busy, name
 
 
-def fill(busy, name, online_text, busy_text, name_text):
+def fill(busy, name, online_text, busy_text, name_text, cached_daemon):
     online_text.append("online", style="green")
     busy_text.append(str(busy), style="red" if busy else "green")
     name_text.append(name)
+    cached_daemon.name = name
 
 
 def fill_error(e, online_text, busy_text, name_text, name_fallback):
@@ -44,7 +45,8 @@ def status(force_color=False):
         console = None
     with Live(table, refresh_per_second=4, console=console) as live:
         results = []
-        for daemon in read_daemon_cache():
+        daemons = read_daemon_cache()
+        for daemon in daemons:
             online_text = Text("")
             busy_text = Text("")
             name_text = Text("")
@@ -62,7 +64,7 @@ def status(force_color=False):
                     (daemon,),
                     callback=partial(fill, online_text=online_text, busy_text=busy_text, name_text=name_text),
                     error_callback=partial(
-                        fill_error, online_text=online_text, busy_text=busy_text, name_text=name_text, name_fallback=daemon.name
+                        fill_error, online_text=online_text, busy_text=busy_text, name_text=name_text, daemon=daemon
                     ),
                 )
             )
@@ -70,3 +72,6 @@ def status(force_color=False):
         # Wait for all the results before exiting live view
         for r in results:
             r.wait()
+
+    # update cache (names may have changed)
+    write_to_daemon_cache(*[d for d in daemons])
