@@ -35,7 +35,7 @@ def read_daemon_cache():
         dic = {}
     # process
     out = []
-    for v in sorted(dic.values(), key=lambda v: tuple(v["host"], v["port"])):
+    for v in sorted(dic.values(), key=lambda v: (v["host"], v["port"])):
         dd = DaemonData(**v)
         out.append(dd)
     # return

@@ -20,17 +20,18 @@ def connect(daemon):
     return busy, name
 
 
-def fill(busy, name, online_text, busy_text, name_text, cached_daemon):
+def fill(result, online_text, busy_text, name_text, cached_daemon):
+    busy, name = result
     online_text.append("online", style="green")
     busy_text.append(str(busy), style="red" if busy else "green")
     name_text.append(name)
     cached_daemon.name = name
 
 
-def fill_error(e, online_text, busy_text, name_text, name_fallback):
+def fill_error(e, online_text, busy_text, name_text, cached_daemon):
     online_text.append("offline", style="red")
     busy_text.append("?", style="red")
-    name_text.append(name_fallback)
+    name_text.append(cached_daemon.name)
 
 
 def status(force_color=False):
@@ -63,14 +64,18 @@ def status(force_color=False):
                     connect,
                     (daemon,),
                     callback=partial(
-                        fill, online_text=online_text, busy_text=busy_text, name_text=name_text
+                        fill, 
+                        online_text=online_text, 
+                        busy_text=busy_text, 
+                        name_text=name_text, 
+                        cached_daemon=daemon
                     ),
                     error_callback=partial(
                         fill_error,
                         online_text=online_text,
                         busy_text=busy_text,
                         name_text=name_text,
-                        daemon=daemon,
+                        cached_daemon=daemon,
                     ),
                 )
             )
