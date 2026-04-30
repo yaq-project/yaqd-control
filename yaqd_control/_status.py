@@ -64,11 +64,11 @@ def status(force_color=False):
                     connect,
                     (daemon,),
                     callback=partial(
-                        fill, 
-                        online_text=online_text, 
-                        busy_text=busy_text, 
-                        name_text=name_text, 
-                        cached_daemon=daemon
+                        fill,
+                        online_text=online_text,
+                        busy_text=busy_text,
+                        name_text=name_text,
+                        cached_daemon=daemon,
                     ),
                     error_callback=partial(
                         fill_error,
