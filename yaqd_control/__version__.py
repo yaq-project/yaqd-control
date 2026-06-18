@@ -9,7 +9,7 @@ here = pathlib.Path(__file__).resolve().parent
 __all__ = ["__version__", "__branch__"]
 
 
-__version__ = "2023.6.0"
+__version__ = "2026.6.0"
 
 try:
     __branch__ = (
