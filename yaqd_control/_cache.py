@@ -35,14 +35,14 @@ def read_daemon_cache():
         dic = {}
     # process
     out = []
-    for v in dic.values():
+    for v in sorted(dic.values(), key=lambda v: (v["host"], v["port"])):
         dd = DaemonData(**v)
         out.append(dd)
     # return
     return out
 
 
-def write_to_daemon_cache(daemon_data):
+def write_to_daemon_cache(*daemon_datas: DaemonData):
     # read
     try:
         with open(daemon_cache_path, "r") as f:
@@ -50,7 +50,8 @@ def write_to_daemon_cache(daemon_data):
     except FileNotFoundError:
         dic = {}
     # extend
-    dic[f"{daemon_data.host}:{daemon_data.port}"] = daemon_data.as_dict()
+    for daemon_data in daemon_datas:
+        dic[f"{daemon_data.host}:{daemon_data.port}"] = daemon_data.as_dict()
     # write
     with open(daemon_cache_path, "wt") as f:
         toml.dump(dic, f)
