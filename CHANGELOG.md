@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Added
+- yaqd status will check for name changes and update the cache
+
 ## [2023.6.0]
 
 ### Changed

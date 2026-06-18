@@ -57,17 +57,17 @@ nssm_exe = ""
 
 
 class Action(str, Enum):
-    disable: str = "disable"
-    enable: str = "enable"
-    install: str = "install"
-    load: str = "load"
-    reload: str = "reload"
-    remove: str = "remove"
-    restart: str = "restart"
-    set: str = "set"
-    start: str = "start"
-    stop: str = "stop"
-    unload: str = "unload"
+    disable = "disable"
+    enable = "enable"
+    install = "install"
+    load = "load"
+    reload = "reload"
+    remove = "remove"
+    restart = "restart"
+    set = "set"
+    start = "start"
+    stop = "stop"
+    unload = "unload"
 
 
 if sys.platform.startswith("win32"):
